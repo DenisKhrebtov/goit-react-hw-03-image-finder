@@ -5,22 +5,24 @@ import { Header, Form, Button, Input } from './Searchbar.styled';
 
 export class Searchbar extends Component {
   state = {
-    imageName: '',
+    queryNew: '',
   };
 
   handleNameChange = event => {
-    this.setState({ imageName: event.currentTarget.value.toLowerCase() });
+    this.setState({ queryNew: event.currentTarget.value.toLowerCase() });
+  };
+  reset = () => {
+    this.setState({ queryNew: '' });
   };
 
   handleSubmit = event => {
     event.preventDefault();
 
-    if (this.state.imageName.trim() === '') {
-      toast.error('Введите ключевое слово поиска.');
-      return;
+    if (!this.state.queryNew) {
+      return toast.error('Введите ключевое слово поиска.');
     }
-    this.props.onSubmit(this.state.imageName);
-    this.setState({ imageName: '' });
+    this.props.onSubmit(this.state.queryNew);
+    this.reset();
   };
 
   render() {
@@ -31,11 +33,11 @@ export class Searchbar extends Component {
             <span>Search</span>
           </Button>
           <Input
-            // type="text"
-            // autocomplete="off"
-            // autoFocus
+            type="text"
+            autocomplete="off"
+            autoFocus
             placeholder="Search images and photos"
-            value={this.state.imageName}
+            value={this.state.queryNew}
             onChange={this.handleNameChange}
           />
         </Form>
