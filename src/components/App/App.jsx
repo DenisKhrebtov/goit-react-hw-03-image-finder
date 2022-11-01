@@ -3,8 +3,8 @@ import { ToastContainer } from 'react-toastify';
 import { Searchbar } from '../Searchbar/Searchbar';
 import { ImageGallery } from '../ImageGallery/ImageGallery';
 import { fetch } from '../API/api';
-// import { Loader } from '../Loader/Loader';
-// import { Button } from '../Button/Button';
+import { Loader } from '../Loader/Loader';
+import { Button } from '../Button/Button';
 // import { Modal } from '../Modal/Modal';
 import { Wrapper } from './App.styled';
 import { toast } from 'react-toastify';
@@ -24,7 +24,7 @@ export class App extends Component {
 
   createGallery = async (query, page) => {
     try {
-      this.setState({ loading: true });
+      this.setState({ loading: true, images: [] });
       const data = await fetch(query, page);
       if (!data.totalHits) {
         return toast.error('Ничего не найдено');
@@ -40,12 +40,15 @@ export class App extends Component {
     }
   };
 
+  loadMore = () => {
+    this.setState(prevState => ({ page: prevState.page + 1 }));
+  };
+
   componentDidUpdate(_, prevState) {
-    if (
-      prevState.page !== this.state.page ||
-      prevState.query !== this.state.query
-    ) {
-      this.createGallery(this.state.query, this.state.page);
+    const { page, query } = this.state;
+
+    if (prevState.page !== page || prevState.query !== query) {
+      this.createGallery(query, page);
     }
   }
 
@@ -53,12 +56,13 @@ export class App extends Component {
     return (
       <Wrapper>
         <Searchbar onSubmit={this.handleFormSubmit} />
+        {this.state.loading && <Loader />}
 
         {/* <ImageGallery>
           <ImageGalleryItem />
         </ImageGallery>
-        <Loader />
-        <Button />
+        
+
         {showModal && <Modal />} */}
         <ImageGallery images={this.state.images} />
         <ToastContainer
@@ -73,6 +77,9 @@ export class App extends Component {
           pauseOnHover
           theme="colored"
         />
+        {this.state.total > this.state.images.length && (
+          <Button onLoadMore={this.loadMore} />
+        )}
       </Wrapper>
     );
   }
