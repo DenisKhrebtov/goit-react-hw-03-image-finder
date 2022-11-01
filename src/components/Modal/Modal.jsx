@@ -14,11 +14,17 @@ export class Modal extends Component {
     }
   };
 
+  onBackdropClick = e => {
+    if (e.target === e.currentTarget) {
+      this.props.onClose();
+    }
+  };
+
   render() {
     return (
       <div>
         <div onClick={this.onBackdropClick}>
-          <img src="{this.props.img}" alt="this.props.alt" />
+          <img src={this.props.img} alt={this.props.alt} />
         </div>
       </div>
     );

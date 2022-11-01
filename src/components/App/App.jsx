@@ -20,6 +20,7 @@ export class App extends Component {
 
   handleFormSubmit = queryNew => {
     if (queryNew !== this.state.query) {
+      this.setState({ loading: true, images: [] });
       return this.setState({ query: queryNew });
     }
     return toast.info('You already have it 🥳');
@@ -27,7 +28,6 @@ export class App extends Component {
 
   createGallery = async (query, page) => {
     try {
-      this.setState({ loading: true, images: [] });
       const data = await fetch(query, page);
       if (!data.totalHits) {
         return toast.error(
