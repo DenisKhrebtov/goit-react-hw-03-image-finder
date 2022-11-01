@@ -1,7 +1,7 @@
 export const Button = ({ onLoadMore }) => {
   return (
     <div>
-      <button type="button" onLoadMore={onLoadMore}>
+      <button type="button" onClick={onLoadMore}>
         Load More
       </button>
     </div>

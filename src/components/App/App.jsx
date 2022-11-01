@@ -19,7 +19,10 @@ export class App extends Component {
   };
 
   handleFormSubmit = queryNew => {
-    this.setState({ query: queryNew });
+    if (queryNew !== this.state.query) {
+      return this.setState({ query: queryNew });
+    }
+    return toast.info('You already have it 🥳');
   };
 
   createGallery = async (query, page) => {
@@ -27,10 +30,13 @@ export class App extends Component {
       this.setState({ loading: true, images: [] });
       const data = await fetch(query, page);
       if (!data.totalHits) {
-        return toast.error('Ничего не найдено');
+        return toast.error(
+          'Sorry, something went wrong, change your request 🧐'
+        );
       } else {
         this.setState(prevState => ({
           images: [...prevState.images, ...data.hits],
+          total: data.totalHits,
         }));
       }
     } catch (error) {
@@ -58,16 +64,11 @@ export class App extends Component {
         <Searchbar onSubmit={this.handleFormSubmit} />
         {this.state.loading && <Loader />}
 
-        {/* <ImageGallery>
-          <ImageGalleryItem />
-        </ImageGallery>
-        
-
-        {showModal && <Modal />} */}
+        {/* {showModal && <Modal />}  */}
         <ImageGallery images={this.state.images} />
         <ToastContainer
           position="top-left"
-          autoClose={2000}
+          autoClose={3000}
           hideProgressBar={false}
           newestOnTop={true}
           closeOnClick
