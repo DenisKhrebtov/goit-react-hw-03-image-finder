@@ -1,12 +1,13 @@
 import { Component } from 'react';
-import { ToastContainer } from 'react-toastify';
+
 import { Searchbar } from '../Searchbar/Searchbar';
 import { ImageGallery } from '../ImageGallery/ImageGallery';
 import { fetch } from '../API/api';
 import { Loader } from '../Loader/Loader';
 import { Button } from '../Button/Button';
-// import { Modal } from '../Modal/Modal';
 import { Wrapper } from './App.styled';
+
+import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export class App extends Component {
@@ -20,7 +21,7 @@ export class App extends Component {
 
   handleFormSubmit = queryNew => {
     if (queryNew !== this.state.query) {
-      this.setState({ loading: true, images: [] });
+      this.setState({ images: [] });
       return this.setState({ query: queryNew });
     }
     return toast.info('You already have it 🥳');
@@ -28,6 +29,7 @@ export class App extends Component {
 
   createGallery = async (query, page) => {
     try {
+      this.setState({ loading: true });
       const data = await fetch(query, page);
       if (!data.totalHits) {
         return toast.error(
@@ -62,10 +64,8 @@ export class App extends Component {
     return (
       <Wrapper>
         <Searchbar onSubmit={this.handleFormSubmit} />
-        {this.state.loading && <Loader />}
-
-        {/* {showModal && <Modal />}  */}
         <ImageGallery images={this.state.images} />
+        {this.state.loading && <Loader />}
         <ToastContainer
           position="top-left"
           autoClose={3000}

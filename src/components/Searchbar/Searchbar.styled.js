@@ -61,3 +61,8 @@ export const Input = styled.input`
     font-size: 18px;
   }
 `;
+
+export const SpanSearch = styled.span`
+  width: 20px;
+  height: 20px;
+`;

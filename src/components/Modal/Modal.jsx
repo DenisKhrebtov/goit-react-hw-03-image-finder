@@ -1,5 +1,6 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Component } from 'react';
+import { Wrapper, ModalOpen } from './Modal.styled';
 export class Modal extends Component {
   componentDidMount() {
     window.addEventListener('keydown', this.onClickEscape);
@@ -9,7 +10,7 @@ export class Modal extends Component {
   }
 
   onClickEscape = event => {
-    if (event.target === 'Escape') {
+    if (event.code === 'Escape') {
       this.props.onClose();
     }
   };
@@ -22,11 +23,17 @@ export class Modal extends Component {
 
   render() {
     return (
-      <div>
-        <div onClick={this.onBackdropClick}>
+      <Wrapper onClick={this.onBackdropClick}>
+        <ModalOpen>
           <img src={this.props.img} alt={this.props.alt} />
-        </div>
-      </div>
+        </ModalOpen>
+      </Wrapper>
     );
   }
 }
+
+Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  img: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+};
