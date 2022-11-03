@@ -19,7 +19,7 @@ export class Searchbar extends Component {
     event.preventDefault();
 
     if (!this.state.queryNew) {
-      return toast.error('Введите ключевое слово поиска.');
+      return toast.error('Write keyword for search 🧐');
     }
     this.props.onSubmit(this.state.queryNew);
     this.reset();
