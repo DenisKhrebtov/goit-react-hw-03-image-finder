@@ -21,7 +21,7 @@ export class App extends Component {
 
   handleFormSubmit = queryNew => {
     if (queryNew !== this.state.query) {
-      this.setState({ images: [] });
+      this.setState({ images: [], total: 0, page: 1 });
       return this.setState({ query: queryNew });
     }
     return toast.info('You already have it 🥳');
