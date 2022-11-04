@@ -1,6 +1,9 @@
-import PropTypes from 'prop-types';
 import { Component } from 'react';
+
+import PropTypes from 'prop-types';
+
 import { Wrapper, ModalOpen } from './Modal.styled';
+
 export class Modal extends Component {
   componentDidMount() {
     window.addEventListener('keydown', this.onClickEscape);

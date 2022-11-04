@@ -1,15 +1,17 @@
 import { Component } from 'react';
 
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { fetch } from '../../api/api';
+
 import { Searchbar } from '../Searchbar/Searchbar';
 import { ImageGallery } from '../ImageGallery/ImageGallery';
-import { fetch } from '../API/api';
 import { Loader } from '../Loader/Loader';
 import { Button } from '../Button/Button';
 import { Wrapper } from './App.styled';
 
-import { ToastContainer } from 'react-toastify';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 export class App extends Component {
   state = {
     query: '',
