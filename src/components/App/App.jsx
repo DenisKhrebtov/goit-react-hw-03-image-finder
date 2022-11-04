@@ -1,8 +1,6 @@
 import { Component } from 'react';
 
-import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import { fetch } from '../../api/api';
 
@@ -10,6 +8,8 @@ import { Searchbar } from '../Searchbar/Searchbar';
 import { ImageGallery } from '../ImageGallery/ImageGallery';
 import { Loader } from '../Loader/Loader';
 import { Button } from '../Button/Button';
+import { Toast } from '../ToastContainer/ToastContainer';
+
 import { Wrapper } from './App.styled';
 
 export class App extends Component {
@@ -68,18 +68,7 @@ export class App extends Component {
         <Searchbar onSubmit={this.handleFormSubmit} />
         <ImageGallery images={this.state.images} />
         {this.state.loading && <Loader />}
-        <ToastContainer
-          position="top-left"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={true}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
+        <Toast />
         {this.state.total > this.state.images.length && (
           <Button onLoadMore={this.loadMore} />
         )}
